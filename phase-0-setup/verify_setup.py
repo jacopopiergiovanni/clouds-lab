@@ -48,10 +48,25 @@ def parse_gcloud_config(raw: str) -> dict:
     Args:
         raw: the raw stdout string from the gcloud command (may be empty).
     """
-    # TODO: parse `raw` as JSON and return {"account": ..., "project": ...}
-    #       from the "core" section. Return empty strings if raw is empty or a
-    #       field is missing.
-    raise NotImplementedError("Phase 0: implement parse_gcloud_config()")
+    if not raw or not raw.strip():
+        return {"account": "", "project": ""}
+
+    try:
+        data = json.loads(raw)
+    except (json.JSONDecodeError, ValueError):
+        return {"account": "", "project": ""}
+
+    if not isinstance(data, dict):
+        return {"account": "", "project": ""}
+
+    core = data.get("core")
+    if not isinstance(core, dict):
+        return {"account": "", "project": ""}
+
+    return {
+        "account": str(core.get("account") or ""),
+        "project": str(core.get("project") or ""),
+    }
 
 
 def parse_repo_slug(remote_url: str) -> str:
@@ -67,9 +82,39 @@ def parse_repo_slug(remote_url: str) -> str:
     Args:
         remote_url: output of ``git remote get-url origin`` (may be empty).
     """
-    # TODO: return "owner/repo" for both the HTTPS and SSH forms shown above.
-    #       Strip any trailing ".git". Return "" if not a github.com URL.
-    raise NotImplementedError("Phase 0: implement parse_repo_slug()")
+    if not remote_url or not remote_url.strip():
+        return ""
+
+    url = remote_url.strip()
+
+    # Match and remove the GitHub host prefix
+    prefixes = (
+        "https://github.com/",
+        "http://github.com/",
+        "git@github.com:",
+        "ssh://git@github.com/",
+    )
+
+    path = None
+    for prefix in prefixes:
+        if url.startswith(prefix):
+            path = url[len(prefix):]
+            break
+
+    if path is None:
+        return ""
+
+    # Strip any trailing slashes and the ".git" suffix
+    path = path.rstrip("/")
+    if path.endswith(".git"):
+        path = path[:-4]
+
+    # Validate that it matches "owner/repo" format
+    parts = path.split("/")
+    if len(parts) == 2 and parts[0] and parts[1]:
+        return f"{parts[0]}/{parts[1]}"
+
+    return ""
 
 
 # --------------------------------------------------------------------------- #

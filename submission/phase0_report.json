@@ -1,0 +1,24 @@
+{
+  "phase": "0",
+  "environment": {
+    "cloud_shell": true
+  },
+  "python": {
+    "version": "3.12.3",
+    "ok": true
+  },
+  "gcloud": {
+    "account": "jacopo.piergiovanni@eurecom.fr",
+    "project": "project-d0c10099-a674-4ab9-b4b",
+    "error": null
+  },
+  "docker": {
+    "version": "Docker version 29.8.2, build 7fc2dff",
+    "present": true
+  },
+  "git": {
+    "remote": "https://github.com/jacopopiergiovanni/clouds-lab.git",
+    "is_github": true,
+    "slug": "jacopopiergiovanni/clouds-lab"
+  }
+}
