@@ -1,0 +1,30 @@
+{
+  "phase": "2",
+  "environment": {
+    "colab": true
+  },
+  "attention": {
+    "naive_ms": 277.666,
+    "vectorized_ms": 1.238,
+    "speedup": 224.29
+  },
+  "threads": {
+    "1": 3029.396,
+    "2": 2373.176,
+    "4": 2543.541,
+    "8": 2489.27
+  },
+  "devices": {
+    "cpu_ms": 497744.3,
+    "gpu_ms": 13428.2
+  },
+  "training": {
+    "steps": 2000,
+    "final_loss": 1.4349,
+    "param_count": 4935680
+  },
+  "sample": "\nI hear his brother to praye, not two life\nTo chrows its not and widoway day, they till\nWhich would mothen, she with prompeal to the\nShall far slaughter and to streping. Welcomest, more.\n\nBeNOQUE's:\nTh",
+  "model": {
+    "gcs_url": "https://storage.googleapis.com/project-d0c10099-a674-4ab9-b4b-eurecomgpt/model.safetensors"
+  }
+}
